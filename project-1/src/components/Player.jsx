@@ -1,12 +1,22 @@
 import React, {useState} from 'react'
 
 function Player({name, symbol}) {
+    const [player, setPlayer] = useState(name)
     const [isEditing, setIsEditing] = useState(false);
     const handleEdit = () => {
-        setIsEditing(true);
+        setIsEditing((isEditing) => !isEditing);
     }
+    const handleChange = (event) => {
+        setPlayer(event.target.value);
+    }
+
     let btnCaption = isEditing ? 'Save' : 'Edit';
-    let playerName = isEditing ? <input autoFocus={true}/> : <span className={'player-name'}>{name}</span>
+    let playerName = isEditing ? <input
+        autoFocus={true}
+        required={true}
+        defaultValue={name}
+        onChange={handleChange} /> :
+        <span className={'player-name'}>{player}</span>
     return (<li>
         <span className={'player'}>
             {playerName}
