@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 
 const initialGameBoard = [
@@ -8,14 +8,21 @@ const initialGameBoard = [
 ]
 
 function GameBoard(props) {
+    let gameBoard = initialGameBoard;
+    for(const turn of props.turns) {
+        const { square, player } = turn;
+        const { row, col } = square;
+
+        gameBoard[row][col] = player;
+    }
     return (
         <ol id={'game-board'}>
-            {initialGameBoard.map((row, i) =>
-                <li key={i}>
+            {gameBoard.map((row, rowIndex) =>
+                <li key={rowIndex}>
                     <ol>
                         {row.map((playerSymbol, colIndex) =>
                             <li key={colIndex}>
-                                <button>{playerSymbol}</button>
+                                <button onClick={() => props.onSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
                             </li>)}
                     </ol>
                 </li>)}
@@ -23,5 +30,8 @@ function GameBoard(props) {
     )
 }
 
-GameBoard.propTypes = {}
+GameBoard.propTypes = {
+    onSelectSquare: PropTypes.func.isRequired,
+    turns: PropTypes.array.isRequired,
+}
 export default GameBoard
