@@ -5,9 +5,10 @@ function GameOver(props) {
     return (
         <div id={'game-over'}>
             <h2>Game Over!</h2>
-            <p>{props.winner} won!</p>
+            {props.winner && <p>{props.winner} won!</p>}
+            {!props.winner && <p>It&apos;s a draw!</p>}
             <p>
-                <button>Rematch!</button>
+                <button onClick={props.onRestart}>Rematch!</button>
             </p>
         </div>
     )
@@ -15,5 +16,6 @@ function GameOver(props) {
 
 GameOver.propTypes = {
     winner: PropTypes.string,
+    onRestart: PropTypes.func.isRequired,
 }
 export default GameOver
