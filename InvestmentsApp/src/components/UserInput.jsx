@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import InputField from "./ui/InputField.jsx";
 
 function UserInput(props) {
-    const [investmentData, setInvestmentData] = React.useState(props.investmentData);
+    const investmentData = props.investmentData;
+    console.log(investmentData);
     const handleChange = (event) => {
         const {id, value} = event.target;
         const key = id.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase());
 
-        setInvestmentData((prevData) => ({
+        props.setInvestmentData((prevData) => ({
             ...prevData,
             [key]: parseFloat(value) || 0,
         }));
@@ -45,5 +46,6 @@ UserInput.propTypes = {
         expectedReturn: PropTypes.number.isRequired,
         duration: PropTypes.number.isRequired,
     }).isRequired,
+    setInvestmentData: PropTypes.func.isRequired,
 }
 export default UserInput;
